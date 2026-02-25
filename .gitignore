@@ -1,0 +1,36 @@
+# === Backend ===
+backend/target/
+backend/.idea/
+backend/*.iml
+backend/*.iws
+backend/*.ipr
+
+# === Frontend ===
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.local
+
+# === IDE / Editor ===
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+.classpath
+.project
+.settings/
+
+# === OS ===
+.DS_Store
+Thumbs.db
+
+# === Logs ===
+*.log
+
+# === Docker ===
+docker-compose.override.yml
+
+# === Environment ===
+.env
+.env.*
