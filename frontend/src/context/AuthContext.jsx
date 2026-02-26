@@ -1,27 +1,37 @@
-import { createContext, useContext, useState } from 'react'
+import React, { useState } from "react";
+import api from "../services/api";
+import { AuthContext } from "./AuthContext";
 
-// Basic auth context skeleton. Member 4 will implement full logic.
-const AuthContext = createContext(null)
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
 
-export function AuthProvider({ children }) {
-  const [authState, setAuthState] = useState({
-    isAuthenticated: false,
-    user: null,
-    token: null,
-  })
+  const login = async (username, password) => {
+    const res = await api.post("/auth/login", { username, password });
+    setToken(res.data);
+    setUser({ username });
+    api.defaults.headers.common["Authorization"] = `Bearer ${res.data}`;
+  };
 
-  const value = {
-    ...authState,
-    // Placeholder methods – to be implemented later
-    login: () => {},
-    logout: () => {},
-    hasRole: () => false,
-  }
+  const logout = () => {
+    setUser(null);
+    setToken(null);
+    delete api.defaults.headers.common["Authorization"];
+  };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
-}
+  // Helper: check if user has a role
+  const hasRole = (role) => {
+    if (!user || !user.roles) return false;
+    return user.roles.includes(role);
+  };
 
-export function useAuth() {
-  return useContext(AuthContext)
-}
+  // Helper: check if user is authenticated
+  const isAuthenticated = !!token;
+
+  return (
+    <AuthContext.Provider value={{ user, token, login, logout, hasRole, isAuthenticated }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
 
