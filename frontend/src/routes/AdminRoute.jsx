@@ -1,5 +1,5 @@
 import { Navigate } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext.jsx'
+import useAuth from '../context/useAuth';
 
 // Admin-only route guard. Member 4 will refine role logic.
 export function AdminRoute({ children }) {

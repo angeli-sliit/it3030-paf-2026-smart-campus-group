@@ -1,11 +1,14 @@
-function BookingsPage() {
-  return (
-    <div>
-      <h1>Bookings</h1>
-      <p>Booking form, My Bookings list, and admin approval UI will be implemented here.</p>
-    </div>
-  )
-}
+import React from "react";
+import BookingForm from "./BookingForm";
+import MyBookingsPage from "./MyBookingsPage";
 
-export default BookingsPage
+const BookingsPage = () => (
+  <div>
+    <BookingForm onSuccess={() => window.location.reload()} />
+    <hr />
+    <MyBookingsPage />
+  </div>
+);
+
+export default BookingsPage;
 
